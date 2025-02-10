@@ -27,18 +27,30 @@ public class Demo {
     
     public static void basicCall() throws ApiException, NoApiKeyException {
 //        String prompt = "全身镜头，18岁的美国女孩，高中校园服饰，瓜子脸，正面看着镜头，JK服装，商业摄影，室外，电影级光照，半身特写，精致的淡妆，锐利的边缘。";
-        String prompt = "远景镜头，唐三藏大战吉吉国王";
+        String prompt = "模仿安格尔的泉创作一副相似画作";
         
         ImageSynthesisParam param =
                 ImageSynthesisParam.builder()
                         .apiKey(System.getenv("DASHSCOPE_API_KEY"))
                         .model(ImageSynthesis.Models.WANX_V1)
                         .prompt(prompt)
-                        .style("<watercolor>")
+                        .style("<photography>")
                         .n(1)
                         .size("1024*1024")
                         .build();
 
+        /***
+            <auto>：默认值，由模型随机输出图像风格。
+            <photography>：摄影。
+            <portrait>：人像写真。
+            <3d cartoon>：3D卡通。
+            <anime>：动画。
+            <oil painting>：油画。
+            <watercolor>：水彩。
+            <sketch>：素描。
+            <chinese painting>：中国画。
+            <flat illustration>：扁平插画。
+         */
         ImageSynthesis imageSynthesis = new ImageSynthesis();
         ImageSynthesisResult result = null;
         try {
@@ -67,7 +79,7 @@ public class Demo {
     
     @Test
     public void fetchTask() throws Exception {
-        String taskId = "814ed7c0-82d8-4c8a-886c-e9d77a29ef19";
+        String taskId = "8f6dded0-20e4-4f80-a752-14565f2d8f7d";
         ImageSynthesis is = new ImageSynthesis();
         // If set DASHSCOPE_API_KEY environment variable, apiKey can null.
         ImageSynthesisResult result = is.fetch(taskId, null);
