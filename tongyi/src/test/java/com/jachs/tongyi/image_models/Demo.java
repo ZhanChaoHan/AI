@@ -79,7 +79,7 @@ public class Demo {
     
     @Test
     public void fetchTask() throws Exception {
-        String taskId = "8f6dded0-20e4-4f80-a752-14565f2d8f7d";
+        String taskId = "a8417659-0537-4e9d-9806-4dbfcc3f337c";
         ImageSynthesis is = new ImageSynthesis();
         // If set DASHSCOPE_API_KEY environment variable, apiKey can null.
         ImageSynthesisResult result = is.fetch(taskId, null);
