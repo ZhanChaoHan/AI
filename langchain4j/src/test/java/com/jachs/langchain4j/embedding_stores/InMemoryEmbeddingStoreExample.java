@@ -12,7 +12,8 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import java.util.List;
 
 public class InMemoryEmbeddingStoreExample {
-
+	static final String filePath="";
+	
     public static void main(String[] args) {
 
         InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
@@ -38,13 +39,14 @@ public class InMemoryEmbeddingStoreExample {
         System.out.println(embeddingMatch.score()); // 0.8144288515898701
         System.out.println(embeddingMatch.embedded().text()); // I like football.
 
-        // In-memory embedding store can be serialized and deserialized to/from JSON
-        // String serializedStore = embeddingStore.serializeToJson();
-        // InMemoryEmbeddingStore<TextSegment> deserializedStore = InMemoryEmbeddingStore.fromJson(serializedStore);
-
+//         In-memory embedding store can be serialized and deserialized to/from JSON
+         String serializedStore = embeddingStore.serializeToJson();
+         InMemoryEmbeddingStore<TextSegment> deserializedStore = InMemoryEmbeddingStore.fromJson(serializedStore);
+         
+         System.out.println(deserializedStore);
         // In-memory embedding store can be serialized and deserialized to/from file
         // String filePath = "/home/me/embedding.store";
-        // embeddingStore.serializeToFile(filePath);
-        // InMemoryEmbeddingStore<TextSegment> deserializedStore = InMemoryEmbeddingStore.fromFile(filePath);
+         embeddingStore.serializeToFile(filePath);
+         InMemoryEmbeddingStore<TextSegment> tStore = InMemoryEmbeddingStore.fromFile(filePath);
     }
 }

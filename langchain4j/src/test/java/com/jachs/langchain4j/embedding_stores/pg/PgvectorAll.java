@@ -34,7 +34,7 @@ public class PgvectorAll {
     @Test
     public void t1() throws FileNotFoundException {
         DocumentParser parser = new ApachePoiDocumentParser();
-        InputStream inputStream =new FileInputStream("d://A.docx");
+        InputStream inputStream =new FileInputStream("d://a.docx");
 
         // Load document (PDF, TXT, etc.)
         Document document = parser.parse(inputStream);
