@@ -5,6 +5,7 @@ import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.loader.ClassPathDocumentLoader;
 import dev.langchain4j.data.document.parser.TextDocumentParser;
 import dev.langchain4j.data.document.splitter.DocumentByCharacterSplitter;
+import dev.langchain4j.data.document.splitter.DocumentByRegexSplitter;
 import dev.langchain4j.data.segment.TextSegment;
 import org.junit.Test;
 
@@ -68,13 +69,29 @@ public class D1 {
                 10          // 自然语言最大重叠字数
         );
         List<TextSegment> segments = splitter.split(document);
-        System.out.println(segments);
+        for (TextSegment segment : segments) {
+            System.out.println(segment);
+        }
 
     }
 
 
     @Test
-    public void documentByRegexSplitter(){
+    public void documentByRegexSplitter() throws FileNotFoundException {
+        TextDocumentParser parser = new TextDocumentParser(UTF_8);
+        InputStream inputStream = new FileInputStream("D://A.TXT");
 
+        Document document = parser.parse(inputStream);
+
+        DocumentByRegexSplitter splitter = new DocumentByRegexSplitter(
+                "\\n\\d\\.", //匹配 换行+"1. 这样的标题"格式
+                "\\n", //保留换行符作为段落连接符
+                200,         // 每段最长字数
+                10                              // 自然语言最大重叠字数
+        );
+        List<TextSegment> segments = splitter.split(document);
+        for (TextSegment segment : segments) {
+            System.out.println(segment);
+        }
     }
 }
