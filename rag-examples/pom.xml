@@ -84,6 +84,29 @@
             <artifactId>langchain4j-embedding-store-filter-parser-sql</artifactId>
             <version>${langchart.version}</version>
         </dependency>
+        
+        <!--本地的精排模型-->
+        <dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-onnx-scoring</artifactId>
+		 	<version>${langchart.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-community-xinference</artifactId>
+		    <version>${langchart.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-jina</artifactId>
+		    <version>${langchart.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-community-qianfan</artifactId>
+		    <version>${langchart.version}</version>
+		</dependency>
 
 		<!--
 			特点‌：HuggingFace 上最流行的轻量级模型之一。维度为 384，速度极快，体积小巧。虽然主要针对英文训练，但也具备一定的多语言能力。

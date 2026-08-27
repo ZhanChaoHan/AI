@@ -4,10 +4,10 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-import dev.langchain4j.community.model.qianfan.QianfanEmbeddingModel;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.loader.ClassPathDocumentLoader;
@@ -21,7 +21,9 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.cohere.CohereScoringModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
+import dev.langchain4j.model.jina.JinaScoringModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.scoring.ScoringModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.rag.content.Content;
@@ -45,6 +47,8 @@ public class ReRankingDemo {
     String qianwen_apiKey = System.getenv("qianwen-apikey");
     String apiKey = System.getenv("deepseek-key");
     
+    
+    static final  String query="噫吁嚱，危乎高哉！";
     
     @Test
     public void t1() {
@@ -70,9 +74,9 @@ public class ReRankingDemo {
                 .embeddingStore(embeddingStore)
                 .embeddingModel(embeddingModel)
                 .maxResults(20)
-                .build();//返回20条
+                .build();//粗排返回20条
         
-        List<Content> cList=contentRetriever.retrieve ( Query.from ( "噫吁嚱，危乎高哉！" ) );
+        List<Content> cList=contentRetriever.retrieve ( Query.from ( query) );
         
         System.out.println ( "数量:"+cList.size ()+"个" );
         cList.forEach ( a->{
@@ -80,62 +84,126 @@ public class ReRankingDemo {
             System.out.println ( "\n" );
         });
         
-//        QianfanEmbeddingModel scoringModel = CohereScoringModel.builder()
-//                .apiKey(qianwen_apiKey)
-//                .modelName("bce-reranker-base")
-//                .build();//调用千问的重排序模型
         
-        QianfanEmbeddingModel model = QianfanEmbeddingModel.builder()
-                .user("111")
-                .apiKey(qianwen_apiKey)
-//                .secretKey(secretKey)
-                .endpoint("embedding-v1")
-                .logRequests(true)
-                .logResponses(true)
+        /***
+			目前Langchain4j默认支持接入以下模型或者平台：
+			In-process (ONNX)：本地的Scoring (Reranking) Models，加载本地模型。
+			Cohere：Cohere的一个相关性评分模型
+			Jina：Jina的一个相关性评分模型
+			Google Cloud Vertex AI Ranking API：谷歌的一个相关性评分模型
+			Voyage AI：MongoDB旗下的一个嵌入模型，可以用于相关性评分
+			Xinference：是一个开源平台，用于简化各种 AI 模型的运行和集成，可以将评分大模型放入该平台运行。
+         */
+//        ScoringModel jinaScoringModel = JinaScoringModel.builder()
+//                .apiKey("jina_f04724edb23f4d3f96ccff305342ef91t9IZcry7kzrzHL9gB6b-ucgJot-N")
+//                .modelName("jina-reranker-v3")
+//                .build();
+        
+        
+        //https://dashboard.voyageai.com/organization/usage?tab=free-token
+        ScoringModel scoringModel = CohereScoringModel.builder()
+                .apiKey("pa-j9f3YJEglBmxbBoc8qkwgnd7o4tH1NWRYq__qrPODzN")
+                .modelName("rerank-multilingual-v3.0")
                 .build();
         
-        ContentAggregator contentAggregator = ReRankingContentAggregator.builder()
-                .scoringModel ( model )
-                .minScore(0.8) 
-                .build();//精排后只要大于0.8数据
+        /***
+         * 要安装
+         * https://inference.readthedocs.io/zh-cn/latest/models/model_abilities/rerank.html
+         */
+//        ScoringModel model = XinferenceScoringModel.builder()
+//                .baseUrl(baseUrl())
+//                .apiKey(apiKey())
+//                .modelName(modelName())
+//                .timeout(Duration.ofSeconds(60))
+//                .maxRetries(1)
+//                .logRequests(true)
+//                .logResponses(true)
+//                .build();
         
-        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
-                .contentRetriever(contentRetriever)
-                .contentAggregator(contentAggregator)
-                .build();
+        //要安装
+//        ScoringModel scoringModel =scoringModel = XinferenceScoringModel.builder()
+//                .baseUrl("http://localhost:9997") // Xinference 默认端口
+//                .apiKey(apiKey)
+//                .build();
         
+//        String modelPath = "/path/to/model_quantized.onnx";
+//        String tokenizerPath = "/path/to/tokenizer.json";
+//        
+//        ScoringModel scoringModel = new OnnxScoringModel(
+//                modelPath, 
+//                new SessionOptions(), // OrtSession.SessionOptions (可选，用于配置GPU等)
+//                tokenizerPath, 
+//                512,  // maxSequenceLength
+//                false // useCuda (是否使用GPU)
+//            );
         
-        ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);//最大保留信息
-        
-        ChatLanguageModel deepSeekModel = (ChatLanguageModel) OpenAiChatModel.builder()
-                .apiKey(apiKey)
-                .baseUrl("https://api.deepseek.com/v1") // DeepSeek官方API端点
-                .modelName("deepseek-chat") // 可选deepseek-reasoner（推理模型）
-                .temperature(1.3) // DeepSeek推荐>1.0以获得更好生成效果
-                .timeout(Duration.ofSeconds(60))
-                .maxTokens(1000)
-                .build();//封装对话大模型对象
-        
-        Assistant assistant=AiServices.builder(Assistant.class)
-        .chatLanguageModel(deepSeekModel)
-        .retrievalAugmentor(retrievalAugmentor)
-        .chatMemory(chatMemory)
-        .build();
-        
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.println ("==================================================" );
-                System.out.println ("User: ");
-                String userQuery = scanner.nextLine();
-                System.out.println ("==================================================");
 
-                if ("exit".equalsIgnoreCase(userQuery)) {
-                    break;
-                }
-                String agentAnswer = assistant.answer(userQuery);
-                System.out.println ("==================================================");
-                System.out.println ("Assistant: " + agentAnswer);
-            }
-        }
+
+        
+        List<TextSegment> candidates = cList.stream()
+                .map(Content::textSegment)
+                .toList();
+        
+        
+        // 批量打分
+        List<Double> scores = scoringModel.scoreAll(candidates,query).content();
+
+        // 按分数降序排列，过滤 minScore < 0.1 的结果，取 Top-3
+        List<String> rerankResults = IntStream.range(0, candidates.size())
+                .boxed()
+                .filter(i -> scores.get(i) >= 0.1)          // minScore 过滤
+                .sorted((a, b) -> Double.compare(scores.get(b), scores.get(a)))
+                .limit(3)
+                .map(i -> String.format("[%.4f] %s", scores.get(i), candidates.get(i).text()))
+                .toList();
+
+        System.out.println("=== 有重排序结果（交叉编码器精排，minScore=0.1）===");
+        rerankResults.forEach(r -> System.out.println("  · " + r));
+        
+        
+//        ContentAggregator contentAggregator = ReRankingContentAggregator.builder()
+//                .scoringModel ( scoringModel )
+//                .minScore(0.8) 
+//                .build();//精排后只要大于0.8数据
+//        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+//        	      .contentRetriever(contentRetriever)
+//        	      .contentAggregator(contentAggregator)
+//        	      .build();//RAG 检索增强器：将粗排 + 精排串联为完整流水线
+//        chart(retrievalAugmentor);
+    }
+    
+    public void chart(RetrievalAugmentor retrievalAugmentor) {
+    	 ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);//最大保留信息
+         
+         ChatLanguageModel deepSeekModel = (ChatLanguageModel) OpenAiChatModel.builder()
+                 .apiKey(apiKey)
+                 .baseUrl("https://api.deepseek.com/v1") // DeepSeek官方API端点
+                 .modelName("deepseek-chat") // 可选deepseek-reasoner（推理模型）
+                 .temperature(1.3) // DeepSeek推荐>1.0以获得更好生成效果
+                 .timeout(Duration.ofSeconds(60))
+                 .maxTokens(1000)
+                 .build();//封装对话大模型对象
+         
+         Assistant assistant=AiServices.builder(Assistant.class)
+         .chatLanguageModel(deepSeekModel)
+         .retrievalAugmentor(retrievalAugmentor)
+         .chatMemory(chatMemory)
+         .build();
+         
+         try (Scanner scanner = new Scanner(System.in)) {
+             while (true) {
+                 System.out.println ("==================================================" );
+                 System.out.println ("User: ");
+                 String userQuery = scanner.nextLine();
+                 System.out.println ("==================================================");
+
+                 if ("exit".equalsIgnoreCase(userQuery)) {
+                     break;
+                 }
+                 String agentAnswer = assistant.answer(userQuery);
+                 System.out.println ("==================================================");
+                 System.out.println ("Assistant: " + agentAnswer);
+             }
+         }
     }
 }
