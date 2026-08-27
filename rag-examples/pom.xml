@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.langchain4j</groupId>
+    <artifactId>rag-examples</artifactId>
+    <version>1.19.0</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <langchart.version>1.0.0-beta3</langchart.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchart.version}</version>
+        </dependency>
+        
+        <dependency>
+		  <groupId>dev.langchain4j</groupId>
+		  <artifactId>langchain4j-core</artifactId>
+		  <version>${langchart.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-open-ai</artifactId>
+		    <version>${langchart.version}</version>
+		</dependency>
+	
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-easy-rag</artifactId>
+            <version>${langchart.version}</version>
+            <!--
+            <exclusions>
+		        <exclusion>
+		            <groupId>dev.langchain4j</groupId>
+		            <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
+		        </exclusion>
+		    </exclusions>
+		    -->
+        </dependency>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+            <version>${langchart.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-cohere</artifactId>
+            <version>${langchart.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-web-search-engine-tavily</artifactId>
+            <version>${langchart.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-experimental-sql</artifactId>
+            <version>${langchart.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-embeddings-bge-small-en-v15-q</artifactId>
+            <version>${langchart.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-embedding-store-filter-parser-sql</artifactId>
+            <version>${langchart.version}</version>
+        </dependency>
+
+		<!--
+			特点‌：HuggingFace 上最流行的轻量级模型之一。维度为 384，速度极快，体积小巧。虽然主要针对英文训练，但也具备一定的多语言能力。
+‌适用场景‌：英文为主的应用、快速原型开发、嵌入式设备或资源受限环境、对中文精度要求不高的混合语言场景。
+		-->
+		<!--
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
+		    <version>1.19.0-beta29</version>
+		</dependency>
+		-->
+		
+		<!--
+		维度为 1024，语义表达能力更强，但计算资源和内存占用高于 Small 版本。
+		‌适用场景‌：服务器资源充足、对检索准确率极致追求的生产环境。
+		
+	<dependency>
+	    <groupId>dev.langchain4j</groupId>
+	    <artifactId>langchain4j-embeddings-bge-small-zh-v15</artifactId>
+	    <version>1.19.0-beta29</version>
+	</dependency>
+-->
+
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-community-qianfan</artifactId>
+		    <version>${langchart.version}</version>
+		</dependency>
+		
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.3.232</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.25.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.12</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
