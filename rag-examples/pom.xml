@@ -131,6 +131,14 @@
 	</dependency>
 -->
 
+		<!--JDBC持久库-->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.33</version>
+		</dependency>
+	    
+    
 		<dependency>
 		    <groupId>dev.langchain4j</groupId>
 		    <artifactId>langchain4j-community-qianfan</artifactId>
@@ -161,6 +169,11 @@
             <version>1.5.12</version>
         </dependency>
 
+        <dependency>
+        	<groupId>dev.langchain4j</groupId>
+        	<artifactId>agentic-tutorial</artifactId>
+        	<version>1.19.0</version>
+        </dependency>
     </dependencies>
 
 </project>

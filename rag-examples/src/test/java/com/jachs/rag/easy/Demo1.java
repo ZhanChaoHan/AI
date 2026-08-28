@@ -45,8 +45,8 @@ public class Demo1 {
        
         ChatLanguageModel deepSeekModel = (ChatLanguageModel) OpenAiChatModel.builder()
                 .apiKey(apiKey)
-                .baseUrl("https://api.deepseek.com/v1") // DeepSeek官方API端点
-                .modelName("deepseek-chat") // 可选deepseek-reasoner（推理模型）
+                .baseUrl("https://api.deepseek.com/v1")
+                .modelName("deepseek-v4-flash1231412") // 可选deepseek-reasoner（推理模型）
                 .temperature(1.3) // DeepSeek推荐>1.0以获得更好生成效果
                 .timeout(Duration.ofSeconds(60))
                 .maxTokens(1000)

@@ -26,7 +26,7 @@ public class Demo {
                 "model": "wordart-surnames",
                 "prompt": "白云，蓝天", 
                 "input":{
-                    "surname": "诜羽",
+                    "surname": "蒲春泥",
                     "style": "peerless_beauty"
                 },
                 "parameters": {

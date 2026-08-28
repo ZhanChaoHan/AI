@@ -28,8 +28,8 @@ public class Demo {
             {
                 "model": "wanx2.1-i2v-plus",
                 "input": {
-                    "prompt": "喝着红酒吃肉包子",
-                    "img_url": "https://www.pnglog.com/KNXBzP.jpg"
+                    "prompt": "劝酒吹牛",
+                    "img_url": "https://wx2.sinaimg.cn/mw690/0028q7fwgy1i0pc4tcun7j60nw0vvdmn02.jpg"
                 },
                 "parameters": {
                     "prompt_extend": true
@@ -56,7 +56,7 @@ public class Demo {
     @Test
     public void getMp4() throws IOException {
         String url="https://dashscope.aliyuncs.com/api/v1/tasks/";
-        String task_id="6357d5ed-392a-4488-b330-f80c4fddda4d";
+        String task_id="1f9fe788-dfc7-47c0-95ca-9c696a95b089";
         Request request = new Request.Builder()
                 .addHeader ( "Authorization", "Bearer "+System.getenv("DASHSCOPE_API_KEY") )//Bearer 必须带后面是自己的key
                 .url(url+task_id)

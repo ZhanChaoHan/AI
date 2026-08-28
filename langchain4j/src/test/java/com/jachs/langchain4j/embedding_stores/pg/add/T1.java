@@ -34,7 +34,7 @@ public class T1 {
 		);
 
 		TextDocumentParser parser = new TextDocumentParser();
-		InputStream inputStream = new FileInputStream("E:\\code\\git\\AI\\langchain4j\\src\\test\\java\\com\\jachs\\langchain4j\\embedding_stores\\pg\\add\\a.txt");
+		InputStream inputStream = new FileInputStream("D:\\code\\git\\AI\\langchain4j\\src\\test\\java\\com\\jachs\\langchain4j\\embedding_stores\\pg\\add\\a.txt");
 		Document document = parser.parse(inputStream);
 		String text = document.text();
 

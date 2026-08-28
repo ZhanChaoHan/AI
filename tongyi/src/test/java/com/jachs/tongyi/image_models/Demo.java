@@ -27,7 +27,7 @@ public class Demo {
     
     public static void basicCall() throws ApiException, NoApiKeyException {
 //        String prompt = "全身镜头，18岁的美国女孩，高中校园服饰，瓜子脸，正面看着镜头，JK服装，商业摄影，室外，电影级光照，半身特写，精致的淡妆，锐利的边缘。";
-        String prompt = "模仿安格尔的泉创作一副相似画作";
+        String prompt = "成都男性，圆脸络腮胡，白色袜子，婴儿肥，远景，室外街道，电影级光照，全身特写，锐利的边缘。";
         
         ImageSynthesisParam param =
                 ImageSynthesisParam.builder()
@@ -79,7 +79,7 @@ public class Demo {
     
     @Test
     public void fetchTask() throws Exception {
-        String taskId = "a8417659-0537-4e9d-9806-4dbfcc3f337c";
+        String taskId = "0e54bb71-69f1-4945-8c81-52a6950ff416";
         ImageSynthesis is = new ImageSynthesis();
         // If set DASHSCOPE_API_KEY environment variable, apiKey can null.
         ImageSynthesisResult result = is.fetch(taskId, null);

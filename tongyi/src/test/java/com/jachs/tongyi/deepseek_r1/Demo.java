@@ -25,7 +25,7 @@ public class Demo {
                 "messages": [
                     {
                         "role": "user", 
-                        "content": "存多少钱才能体面退休"
+                        "content": ""
                     }
                 ],
                 "stream": true,

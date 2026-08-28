@@ -14,7 +14,7 @@ import dev.langchain4j.store.embedding.IngestionResult;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 
 /***
- * 嵌入存储摄取器
+嵌入存储摄取器
 mbeddingStoreIngestor 表示摄取管道，负责将 Document 摄取到 EmbeddingStore 中。
 在最简单的配置中，EmbeddingStoreIngestor 使用指定的 EmbeddingModel 对提供的 Document 进行嵌入， 
 并将它们及其 Embedding 存储到指定的 EmbeddingStore 中：

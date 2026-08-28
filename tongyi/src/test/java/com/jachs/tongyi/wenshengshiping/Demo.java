@@ -23,7 +23,7 @@ public class Demo {
              {
                 "model": "wanx2.1-t2v-turbo",
                 "input": {
-                    "prompt": "金发碧眼的美女在海滩晒太阳"
+                    "prompt": "北京地区13级大风加龙卷风场景漫天黄沙"
                 },
                 "parameters": {
                     "size": "1280*720"
@@ -40,7 +40,7 @@ public class Demo {
                 .post(body)
                 .build();
         
-        Response response = client.newCall(request).execute();                          
+        Response response = client.newCall(request).execute();
         
         System.out.println ( response.body().string());
     }

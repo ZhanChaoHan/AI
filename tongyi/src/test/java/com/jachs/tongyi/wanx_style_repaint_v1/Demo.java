@@ -23,8 +23,8 @@ public class Demo {
               {
                     "model": "wanx-style-repaint-v1",
                     "input": {
-                        "image_url": "https://pnglog.com/5ReH0y.jpg",
-                        "style_index": 4
+                        "image_url": "https://pnglog.com/22wiXJ.jpg",
+                        "style_index": 8
                     }
                 }
              """;

@@ -54,7 +54,7 @@ public class Demo {
     @Test
     public void getMp4() throws IOException {
         String url="https://dashscope.aliyuncs.com/api/v1/tasks/";
-        String task_id="f61bb0f0-c7eb-4b22-9a8a-2a72b8a06ba9";
+        String task_id="6e3552c1-f48d-45e4-a045-52a053975e96";
         Request request = new Request.Builder()
                 .addHeader ( "Authorization", "Bearer "+System.getenv("DASHSCOPE_API_KEY") )//Bearer 必须带后面是自己的key
                 .url(url+task_id)
