@@ -107,6 +107,13 @@
 		    <artifactId>langchain4j-community-qianfan</artifactId>
 		    <version>${langchart.version}</version>
 		</dependency>
+		
+		
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-pgvector</artifactId>
+		    <version>${langchart.version}</version>
+		</dependency>
 
 		<!--
 			特点‌：HuggingFace 上最流行的轻量级模型之一。维度为 384，速度极快，体积小巧。虽然主要针对英文训练，但也具备一定的多语言能力。
@@ -137,7 +144,11 @@
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>8.0.33</version>
 		</dependency>
-	    
+	    <dependency>
+	        <groupId>com.zaxxer</groupId>
+	        <artifactId>HikariCP</artifactId>
+	        <version>5.1.0</version> <!-- 请使用最新稳定版 -->
+	    </dependency>
     
 		<dependency>
 		    <groupId>dev.langchain4j</groupId>
@@ -168,12 +179,19 @@
             <artifactId>logback-classic</artifactId>
             <version>1.5.12</version>
         </dependency>
-
+        
+		<dependency>
+		  <groupId>dev.langchain4j</groupId>
+		  <artifactId>langchain4j-web-search-engine-searchapi</artifactId>
+		  <version>${langchart.version}</version>
+		</dependency>
+		<!--
         <dependency>
         	<groupId>dev.langchain4j</groupId>
         	<artifactId>agentic-tutorial</artifactId>
         	<version>1.19.0</version>
         </dependency>
+        -->
     </dependencies>
 
 </project>
