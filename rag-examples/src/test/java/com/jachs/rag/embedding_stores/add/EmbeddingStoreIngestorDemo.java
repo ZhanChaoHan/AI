@@ -26,7 +26,7 @@ public class EmbeddingStoreIngestorDemo {
     @Test
     public void t1() {
         EmbeddingModel model = new BgeSmallEnV15QuantizedEmbeddingModel();//自带模型
-        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
+        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb(true);
         
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
                 .embeddingModel(model)

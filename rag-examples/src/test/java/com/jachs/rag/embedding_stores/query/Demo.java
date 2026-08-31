@@ -48,7 +48,7 @@ public class Demo {
                 .maxResults(1)//取最符合的几条数据，这里是1条
                 .minScore(0.6)//只有符合0.6的才会选用，也可以不设置
                 .build();
-
+        
         List<EmbeddingMatch<TextSegment>> results = store.search(request).matches();
 
         for (EmbeddingMatch<TextSegment> result : results) {

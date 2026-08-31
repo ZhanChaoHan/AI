@@ -43,7 +43,7 @@ public class Demo {
                 loadDocument("documents/bb.txt", new TextDocumentParser()));
         
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
-        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
+        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb(true);
         
         DocumentSplitter splitter = DocumentSplitters.recursive(300, 0);
         

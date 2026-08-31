@@ -92,7 +92,7 @@ public class ContentAggregatorDemo {
 	                ClassPathDocumentLoader.
 	                loadDocument("documents/b.txt", new TextDocumentParser()));
 		 
-		 	PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
+		 	PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb(true);
 			
 			EmbeddingStoreIngestor.ingest(documents, embeddingStore);//文档写入内存库
 			

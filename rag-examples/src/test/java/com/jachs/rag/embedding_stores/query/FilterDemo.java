@@ -3,6 +3,8 @@ package com.jachs.rag.embedding_stores.query;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import dev.langchain4j.data.document.Document;
@@ -15,6 +17,7 @@ import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15Quantize
 import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
+import dev.langchain4j.store.embedding.IngestionResult;
 import dev.langchain4j.store.embedding.filter.Filter;
 import dev.langchain4j.store.embedding.filter.comparison.IsIn;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
@@ -39,26 +42,33 @@ Or
  */
 public class FilterDemo {
 
-    
+	@BeforeEach
+    public void initDb() {
+		 List<Document> documents =Arrays.asList (  
+	                ClassPathDocumentLoader.
+	                loadDocument("documents/a.txt", new TextDocumentParser()),
+	                ClassPathDocumentLoader.
+	                loadDocument("documents/b.txt", new TextDocumentParser()),
+	                ClassPathDocumentLoader.
+	                loadDocument("documents/c.txt", new TextDocumentParser()),
+	                ClassPathDocumentLoader.
+	                loadDocument("documents/d.txt", new TextDocumentParser()),
+	                ClassPathDocumentLoader.
+	                loadDocument("documents/e.txt", new TextDocumentParser())
+	                );
+	        
+	        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb(true);
+	        
+	        IngestionResult ingestionResult= EmbeddingStoreIngestor.ingest(documents, embeddingStore);
+	        
+	        System.out.println(ingestionResult.tokenUsage().totalTokenCount());
+	        
+    }
+	
+	
     @Test
     public void t1() {
-        List<Document> documents =Arrays.asList (  
-                ClassPathDocumentLoader.
-                loadDocument("documents/a.txt", new TextDocumentParser()),
-                ClassPathDocumentLoader.
-                loadDocument("documents/b.txt", new TextDocumentParser()),
-                ClassPathDocumentLoader.
-                loadDocument("documents/c.txt", new TextDocumentParser()),
-                ClassPathDocumentLoader.
-                loadDocument("documents/d.txt", new TextDocumentParser()),
-                ClassPathDocumentLoader.
-                loadDocument("documents/e.txt", new TextDocumentParser())
-                );
-        
-        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
-        
-        EmbeddingStoreIngestor.ingest(documents, embeddingStore);//文档写入内存库
-        
+        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb(false);
         EmbeddingModel model = new BgeSmallEnV15QuantizedEmbeddingModel();
         
         String QUERY="一个";

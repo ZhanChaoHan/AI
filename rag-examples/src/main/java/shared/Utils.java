@@ -17,11 +17,16 @@ import java.util.Scanner;
 
 import static dev.langchain4j.internal.Utils.getOrDefault;
 
+
+
+/***
+ * @author zhanchaohan
+ */
 public class Utils {
 
     public static final String OPENAI_API_KEY = getOrDefault(System.getenv("OPENAI_API_KEY"), "demo");
 
-    public static PgVectorEmbeddingStore initPvDb() {
+    public static PgVectorEmbeddingStore initPvDb(boolean del) {
     	EmbeddingModel model = new BgeSmallEnV15QuantizedEmbeddingModel();
     	
     	 return PgVectorEmbeddingStore.builder()
@@ -31,7 +36,7 @@ public class Utils {
                  .user("postgres")
                  .password("12345678")
                  .table("document_embeddings")
-                 .dropTableFirst(true)
+                 .dropTableFirst(del)
                  .dimension(model.dimension())  // 384 for AllMiniLmL6V2
                  .build();
     }
