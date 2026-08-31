@@ -1,4 +1,4 @@
-package com.jachs.rag.easy;
+package com.jachs.rag.embedding_stores.add;
 
 import java.util.List;
 

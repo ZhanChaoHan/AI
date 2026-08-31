@@ -6,11 +6,9 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModelName;
-import dev.langchain4j.service.AiServices;
 import dev.langchain4j.web.search.WebSearchTool;
 import dev.langchain4j.web.search.searchapi.SearchApiWebSearchEngine;
 import shared.Assistant;
