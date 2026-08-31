@@ -31,6 +31,7 @@ public class Demo {
                 .user("postgres")
                 .password("12345678")
                 .table("document_embeddings")
+                .dropTableFirst(true)
                 .dimension(embeddingModel.dimension())  // 384 for AllMiniLmL6V2
                 .build();
         

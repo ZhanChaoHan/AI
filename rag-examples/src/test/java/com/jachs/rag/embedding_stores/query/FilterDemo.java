@@ -16,10 +16,9 @@ import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.filter.Filter;
-import dev.langchain4j.store.embedding.filter.comparison.ContainsString;
-import dev.langchain4j.store.embedding.filter.comparison.IsEqualTo;
 import dev.langchain4j.store.embedding.filter.comparison.IsIn;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
 /***
 Filter 允许在执行向量搜索时按 Metadata 条目进行过滤。
@@ -56,7 +55,8 @@ public class FilterDemo {
                 loadDocument("documents/e.txt", new TextDocumentParser())
                 );
         
-        InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();//内存库
+        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
+        
         EmbeddingStoreIngestor.ingest(documents, embeddingStore);//文档写入内存库
         
         EmbeddingModel model = new BgeSmallEnV15QuantizedEmbeddingModel();

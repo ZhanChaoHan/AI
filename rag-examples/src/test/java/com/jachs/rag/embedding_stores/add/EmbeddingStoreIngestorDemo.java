@@ -12,6 +12,7 @@ import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15Quantize
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.IngestionResult;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
 /***
 嵌入存储摄取器
@@ -25,7 +26,7 @@ public class EmbeddingStoreIngestorDemo {
     @Test
     public void t1() {
         EmbeddingModel model = new BgeSmallEnV15QuantizedEmbeddingModel();//自带模型
-        InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();//内存库
+        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
         
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
                 .embeddingModel(model)

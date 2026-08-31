@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
-import java.util.Scanner;
 
 import javax.sql.DataSource;
 
@@ -90,20 +89,6 @@ public class SqlDatabaseContentRetrieverDemo {
         .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
         .build();
 		
-		try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.println ("==================================================" );
-                System.out.println ("User: ");
-                String userQuery = scanner.nextLine();
-                System.out.println ("==================================================");
-
-                if ("exit".equalsIgnoreCase(userQuery)) {
-                    break;
-                }
-                String agentAnswer = assistant.answer(userQuery);
-                System.out.println ("==================================================");
-                System.out.println ("Assistant: " + agentAnswer);
-            }
-        }
+		shared.Utils.startConversationWith(assistant);
 	}
 }

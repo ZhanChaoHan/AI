@@ -92,15 +92,7 @@ public class ContentAggregatorDemo {
 	                ClassPathDocumentLoader.
 	                loadDocument("documents/b.txt", new TextDocumentParser()));
 		 
-			EmbeddingStore<TextSegment> embeddingStore = PgVectorEmbeddingStore.builder()
-					.host("localhost")
-					.port(5432)
-					.database("langchat")
-					.user("postgres")
-					.password("12345678")
-					.table("document_embeddings")
-					.dimension(embeddingModel.dimension())  // 384 for AllMiniLmL6V2
-					.build();
+		 	PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
 			
 			EmbeddingStoreIngestor.ingest(documents, embeddingStore);//文档写入内存库
 			

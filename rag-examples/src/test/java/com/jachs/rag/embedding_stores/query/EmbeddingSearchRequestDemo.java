@@ -19,7 +19,7 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 
 
 /***
- * @author zhanchaohan
+@author zhanchaohan
 EmbeddingSearchRequest 表示在 EmbeddingStore 中执行搜索的请求。 它具有以下属性：
 <br>Embedding queryEmbedding：用作参考的嵌入向量。
 <br>int maxResults：返回结果的最大数量。这是一个可选参数。默认值：3。

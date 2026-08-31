@@ -3,7 +3,6 @@ package com.jachs.rag.advanced;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -21,20 +20,17 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.cohere.CohereScoringModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
-import dev.langchain4j.model.jina.JinaScoringModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.scoring.ScoringModel;
-import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.rag.content.Content;
-import dev.langchain4j.rag.content.aggregator.ContentAggregator;
-import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.rag.query.Query;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 import shared.Assistant;
 
 /***
@@ -59,7 +55,7 @@ public class ReRankingDemo {
                 loadDocument("documents/bb.txt", new TextDocumentParser()));
         
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
-        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
         
         
         DocumentSplitter splitter = DocumentSplitters.recursive(100, 0);
@@ -190,20 +186,6 @@ public class ReRankingDemo {
          .chatMemory(chatMemory)
          .build();
          
-         try (Scanner scanner = new Scanner(System.in)) {
-             while (true) {
-                 System.out.println ("==================================================" );
-                 System.out.println ("User: ");
-                 String userQuery = scanner.nextLine();
-                 System.out.println ("==================================================");
-
-                 if ("exit".equalsIgnoreCase(userQuery)) {
-                     break;
-                 }
-                 String agentAnswer = assistant.answer(userQuery);
-                 System.out.println ("==================================================");
-                 System.out.println ("Assistant: " + agentAnswer);
-             }
-         }
+         shared.Utils.startConversationWith(assistant);
     }
 }

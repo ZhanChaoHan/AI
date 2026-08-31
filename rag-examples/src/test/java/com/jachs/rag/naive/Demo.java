@@ -24,7 +24,7 @@ import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 import shared.Assistant;
 
 /***
@@ -43,8 +43,7 @@ public class Demo {
                 loadDocument("documents/bb.txt", new TextDocumentParser()));
         
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
-        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
-        
+        PgVectorEmbeddingStore embeddingStore =shared.Utils.initPvDb();
         
         DocumentSplitter splitter = DocumentSplitters.recursive(300, 0);
         
@@ -79,20 +78,6 @@ public class Demo {
         .chatMemory(chatMemory)
         .build();//切片向量数据传递给大模型，建立对话
         
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.println ("==================================================" );
-                System.out.println ("User: ");
-                String userQuery = scanner.nextLine();
-                System.out.println ("==================================================");
-
-                if ("exit".equalsIgnoreCase(userQuery)) {
-                    break;
-                }
-                String agentAnswer = assistant.answer(userQuery);
-                System.out.println ("==================================================");
-                System.out.println ("Assistant: " + agentAnswer);
-            }
-        }
+        shared.Utils.startConversationWith(assistant);
     }
 }
