@@ -1,9 +1,8 @@
-package com.jachs.rag.advanced;
+package com.jachs.rag.advanced.sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Duration;
 
 import javax.sql.DataSource;
 
@@ -14,7 +13,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import dev.langchain4j.experimental.rag.content.retriever.sql.SqlDatabaseContentRetriever;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.service.AiServices;
@@ -29,16 +27,7 @@ SqlDatabaseContentRetriever 是 ContentRetriever 的一个实验性实现，
  * @author zhanchaohan
  */
 public class SqlDatabaseContentRetrieverDemo {
-	String apiKey = System.getenv("deepseek-key");
-	
-    ChatLanguageModel  chatModel=(ChatLanguageModel) OpenAiChatModel.builder()
-    .apiKey(apiKey)
-    .baseUrl("https://api.deepseek.com/v1") // DeepSeek官方API端点
-    .modelName("deepseek-chat") // 可选deepseek-reasoner（推理模型）
-    .temperature(1.3) // DeepSeek推荐>1.0以获得更好生成效果
-    .timeout(Duration.ofSeconds(60))
-    .maxTokens(1000)
-    .build();//封装对话大模型对象
+	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
     
 	  private static DataSource createDataSource() throws ClassNotFoundException {
 		  	HikariConfig config = new HikariConfig();
@@ -80,11 +69,11 @@ public class SqlDatabaseContentRetrieverDemo {
 	public void t1() throws ClassNotFoundException {
 		ContentRetriever contentRetriever = SqlDatabaseContentRetriever.builder()
                 .dataSource(createDataSource())
-                .chatLanguageModel(chatModel)
+                .chatModel(chatModel)
                 .build();
 		
 		Assistant  assistant =AiServices.builder(Assistant.class)
-        .chatLanguageModel(chatModel)
+        .chatModel(chatModel)
         .contentRetriever(contentRetriever)
         .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
         .build();

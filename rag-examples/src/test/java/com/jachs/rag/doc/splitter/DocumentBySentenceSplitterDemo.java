@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.splitter.DocumentBySentenceSplitter;
 import dev.langchain4j.data.segment.TextSegment;
-import dev.langchain4j.model.openai.OpenAiTokenizer;
 
 /***
 ‌分割依据‌:使用 NLP模型（如 OpenNLP）识别句子边界（句号、问号、感叹号等），而非简单的正则匹配。
@@ -57,13 +56,13 @@ public class DocumentBySentenceSplitterDemo {
       Document document = Document.from(text);
     
       // 1. 创建 Token 估算器
-      OpenAiTokenizer tokenizer = new OpenAiTokenizer("gpt-3.5-turbo");
+//      OpenAiTokenizer tokenizer = new OpenAiTokenizer("gpt-3.5-turbo");
     
       // 2. 初始化分割器，指定基于 Token 计数
       // 参数1: maxTokens (每个分片最大 Token 数，例如 15)
       // 参数2: maxOverlapTokens (重叠 Token 数，例如 3)
       // 参数3: tokenCountEstimator (Token 估算器)
-      DocumentBySentenceSplitter splitter = new DocumentBySentenceSplitter(15, 3, tokenizer);
+      DocumentBySentenceSplitter splitter = new DocumentBySentenceSplitter(15, 3);
     
       // 3. 执行分割
       List<TextSegment> segments = splitter.split(document);

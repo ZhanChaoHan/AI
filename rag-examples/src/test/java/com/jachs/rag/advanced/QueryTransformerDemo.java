@@ -1,16 +1,13 @@
 package com.jachs.rag.advanced;
 
-import java.time.Duration;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
-import dev.langchain4j.data.document.Metadata;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
@@ -30,17 +27,9 @@ import shared.Assistant;
  * @author zhanchaohan
  */
 public class QueryTransformerDemo {
-	String apiKey = System.getenv("deepseek-key");
+	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
 	
-    ChatLanguageModel  chatModel=(ChatLanguageModel) OpenAiChatModel.builder()
-    .apiKey(apiKey)
-    .baseUrl("https://api.deepseek.com/v1") // DeepSeek官方API端点
-    .modelName("deepseek-chat") // 可选deepseek-reasoner（推理模型）
-    .temperature(1.3) // DeepSeek推荐>1.0以获得更好生成效果
-    .timeout(Duration.ofSeconds(60))
-    .maxTokens(1000)
-    .build();//封装对话大模型对象
-    
+	
 	@Test
 	public void t1() {
 		ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);//最大保留信息
@@ -58,7 +47,7 @@ public class QueryTransformerDemo {
                 .build();
         
         Assistant assistant=AiServices.builder(Assistant.class)
-        .chatLanguageModel(chatModel)
+        .chatModel(chatModel)
         .retrievalAugmentor(retrievalAugmentor)
         .chatMemory(chatMemory)
         .build();

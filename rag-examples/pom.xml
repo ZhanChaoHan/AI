@@ -12,7 +12,9 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <langchart.version>1.0.0-beta3</langchart.version>
+        <!--<langchart.version>1.0.0-beta3</langchart.version>-->
+        <langchart.version>1.19.0-beta29</langchart.version>
+        <chat.version>1.19.0</chat.version>
     </properties>
 
     <dependencies>
@@ -20,37 +22,29 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j</artifactId>
-            <version>${langchart.version}</version>
+            <version>${chat.version}</version>
         </dependency>
         
         <dependency>
 		  <groupId>dev.langchain4j</groupId>
 		  <artifactId>langchain4j-core</artifactId>
-		  <version>${langchart.version}</version>
+		  <version>${chat.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>dev.langchain4j</groupId>
 		    <artifactId>langchain4j-open-ai</artifactId>
-		    <version>${langchart.version}</version>
+		    <version>${chat.version}</version>
 		</dependency>
-	
+		<dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+            <version>${chat.version}</version>
+        </dependency>
+        
+        
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-easy-rag</artifactId>
-            <version>${langchart.version}</version>
-            <!--
-            <exclusions>
-		        <exclusion>
-		            <groupId>dev.langchain4j</groupId>
-		            <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
-		        </exclusion>
-		    </exclusions>
-		    -->
-        </dependency>
-
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-open-ai</artifactId>
             <version>${langchart.version}</version>
         </dependency>
 
@@ -216,6 +210,13 @@
 		    <version>1.19.0-beta29</version>
 		</dependency>
 
+
+		<dependency>
+		    <groupId>dev.langchain4j</groupId>
+		    <artifactId>langchain4j-community-zhipu-ai</artifactId>
+		    <version>${langchart.version}</version>
+		</dependency>
+
 		<!--
         <dependency>
         	<groupId>dev.langchain4j</groupId>
@@ -230,8 +231,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>15</source>
-                    <target>15</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
         </plugins>

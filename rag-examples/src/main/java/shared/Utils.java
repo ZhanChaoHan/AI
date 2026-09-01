@@ -8,6 +8,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
@@ -25,6 +27,8 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
  * @author zhanchaohan
  */
 public class Utils {
+	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
+	
 	InMemoryEmbeddingStore<TextSegment>  inMemoryEmbeddingStore=new InMemoryEmbeddingStore<TextSegment>();//本地内存库
     public static final String OPENAI_API_KEY = getOrDefault(System.getenv("OPENAI_API_KEY"), "demo");
 
@@ -42,6 +46,20 @@ public class Utils {
                  .dimension(model.dimension())  // 384 for AllMiniLmL6V2
                  .build();
     }
+    
+    public static OpenAiChatModel chatLanguageModel() {
+    	String apiKey = System.getenv("deepseek-key");
+    	return  OpenAiChatModel.builder()
+                .apiKey(apiKey)
+                .baseUrl("https://api.deepseek.com/v1") // DeepSeek官方API端点
+                .modelName("deepseek-chat") // 可选deepseek-reasoner（推理模型）
+                .temperature(1.3) // DeepSeek推荐>1.0以获得更好生成效果
+                .timeout(Duration.ofSeconds(60))
+                .maxTokens(1000)
+                .build();//封装对话大模型对象
+    }
+    
+    
     public static void startConversationWith(Assistant assistant) {
         Logger log = LoggerFactory.getLogger(Assistant.class);
         try (Scanner scanner = new Scanner(System.in)) {

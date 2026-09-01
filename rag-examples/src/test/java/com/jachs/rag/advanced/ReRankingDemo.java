@@ -16,7 +16,6 @@ import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.cohere.CohereScoringModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
@@ -171,7 +170,7 @@ public class ReRankingDemo {
     public void chart(RetrievalAugmentor retrievalAugmentor) {
     	 ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);//最大保留信息
          
-         ChatLanguageModel deepSeekModel = (ChatLanguageModel) OpenAiChatModel.builder()
+    	 OpenAiChatModel deepSeekModel =  OpenAiChatModel.builder()
                  .apiKey(apiKey)
                  .baseUrl("https://api.deepseek.com/v1") // DeepSeek官方API端点
                  .modelName("deepseek-chat") // 可选deepseek-reasoner（推理模型）
@@ -181,7 +180,7 @@ public class ReRankingDemo {
                  .build();//封装对话大模型对象
          
          Assistant assistant=AiServices.builder(Assistant.class)
-         .chatLanguageModel(deepSeekModel)
+         .chatModel(deepSeekModel)
          .retrievalAugmentor(retrievalAugmentor)
          .chatMemory(chatMemory)
          .build();

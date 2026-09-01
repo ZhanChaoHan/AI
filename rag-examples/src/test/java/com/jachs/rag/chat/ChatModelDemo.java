@@ -8,7 +8,6 @@ import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
@@ -40,20 +39,12 @@ ToolExecutionResultMessage：这是 ToolExecutionRequest 的结果。
  * @see https://docs.langchain4j.info/tutorials/chat-and-language-models
  */
 public class ChatModelDemo {
-    String apiKey = System.getenv("deepseek-key");
-    
-    ChatLanguageModel model = OpenAiChatModel.builder()
-            .baseUrl("https://api.deepseek.com/v1")
-            .apiKey(apiKey)
-            .modelName("deepseek-chat")
-            .temperature(0.7)
-            .logRequests(true)  // 打印请求日志
-            .logResponses(true) // 打印响应日志
-            .build();
-    
+	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
+	
+	
     @Test
     public void t1() {
-        String answer = model.chat ( "你是谁" );
+        String answer =chatModel.chat ( "你是谁" );
         System.out.println("回答: " + answer);
     }
     
@@ -62,7 +53,7 @@ public class ChatModelDemo {
     @Test
     public void t2() {
         // 带上下文的多轮对话 (使用 ChatMessage)
-        ChatResponse response = model.chat(
+        ChatResponse response = chatModel.chat(
             new SystemMessage("你是一个专业的Java助手。"),
             new UserMessage("Hello"),
             new AiMessage("你好！有什么可以帮你的吗？"),
@@ -75,9 +66,9 @@ public class ChatModelDemo {
     @Test
     public void t3() {
         UserMessage firstUserMessage = UserMessage.from("你好我名字是Jachs");
-        AiMessage firstAiMessage = model.chat(firstUserMessage).aiMessage(); 
+        AiMessage firstAiMessage = chatModel.chat(firstUserMessage).aiMessage(); 
         UserMessage secondUserMessage = UserMessage.from("你叫什么名字?");
-        AiMessage secondAiMessage = model.chat(firstUserMessage, firstAiMessage, secondUserMessage).aiMessage(); 
+        AiMessage secondAiMessage = chatModel.chat(firstUserMessage, firstAiMessage, secondUserMessage).aiMessage(); 
         
         System.out.println ( secondAiMessage.text () );
        
@@ -112,7 +103,7 @@ public class ChatModelDemo {
         //ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(300, new OpenAiTokenizer(GPT_3_5_TURBO));
 
         ConversationalChain chain = ConversationalChain.builder()
-                                      .chatLanguageModel(model)
+                                      .chatModel(chatModel)
                                       .chatMemory(chatMemory)
                                       .build();
         String answer = chain.execute("What are all the movies directed by Quentin Tarantino?");

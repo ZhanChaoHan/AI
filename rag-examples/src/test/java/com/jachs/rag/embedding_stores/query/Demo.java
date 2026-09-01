@@ -1,7 +1,6 @@
 package com.jachs.rag.embedding_stores.query;
 
 
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
@@ -21,7 +19,7 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
  * @author zhanchaohan
  */
 public class Demo {
-
+	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
     static final String QUERY="渡远荆门外，来从楚国游。";
 
 
@@ -70,16 +68,7 @@ public class Demo {
         Answer:
         """, context, question);
 
-        ChatLanguageModel mode= OpenAiChatModel.builder()
-                .baseUrl("https://api.deepseek.com/v1")
-                .apiKey(System.getenv("homePC"))
-                .modelName("deepseek-chat")
-                .temperature(0.3)
-                .maxTokens(2048)
-                .timeout(Duration.ofSeconds(60))
-                .build();
-
-        String answer = mode.chat(promptWithContext);
+        String answer = chatModel.chat(promptWithContext);
         System.out.println("Answer: " + answer);
     }
     @Test

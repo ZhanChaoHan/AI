@@ -1,6 +1,5 @@
 package com.jachs.rag.advanced;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,9 +14,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.loader.ClassPathDocumentLoader;
 import dev.langchain4j.data.document.parser.TextDocumentParser;
-import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.experimental.rag.content.retriever.sql.SqlDatabaseContentRetriever;
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
@@ -27,7 +24,6 @@ import dev.langchain4j.rag.content.aggregator.DefaultContentAggregator;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.rag.query.Query;
-import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
@@ -40,16 +36,7 @@ ContentAggregator 负责聚合来自以下来源的多个 Content 排名列表�
  */
 public class ContentAggregatorDemo {
 	EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
-	String apiKey = System.getenv("deepseek-key");
-	
-    ChatLanguageModel  chatModel=(ChatLanguageModel) OpenAiChatModel.builder()
-    .apiKey(apiKey)
-    .baseUrl("https://api.deepseek.com/v1")
-    .modelName("deepseek-chat")
-    .temperature(1.3)
-    .timeout(Duration.ofSeconds(60))
-    .maxTokens(1000)
-    .build();
+	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
 	
 	@Test
 	public void t1() {
@@ -119,7 +106,7 @@ public class ContentAggregatorDemo {
         
         ContentRetriever contentRetriever = SqlDatabaseContentRetriever.builder()
                 .dataSource(dataSource)
-                .chatLanguageModel(chatModel)
+                .chatModel(chatModel)
                 .build();
 		
 		List<Content> cList=contentRetriever.retrieve ( Query.from ( "苹果") );

@@ -5,10 +5,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.model.openai.OpenAiChatModel;
-import dev.langchain4j.model.openai.OpenAiChatModelName;
 import dev.langchain4j.web.search.WebSearchTool;
 import dev.langchain4j.web.search.searchapi.SearchApiWebSearchEngine;
 import shared.Assistant;
@@ -20,6 +18,8 @@ import shared.Assistant;
 public class WebSearchEngineDemo {
     private static final String SEARCHAPI_API_KEY = "YOUR_SEARCHAPI_KEY";
     private static final String OPENAI_API_KEY = "YOUR_OPENAI_KEY";
+    
+    OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
     
     
 	@Test
@@ -36,16 +36,11 @@ public class WebSearchEngineDemo {
                 .build();
         
         
-        ChatLanguageModel chatModel = OpenAiChatModel.builder()
-                .apiKey(OPENAI_API_KEY)
-                .modelName(OpenAiChatModelName.GPT_3_5_TURBO)
-                .logRequests(true)
-                .build();
 
         WebSearchTool webTool = WebSearchTool.from(searchEngine);
 
         Assistant assistant = AiServices.builder(Assistant.class)
-                .chatLanguageModel(chatModel)
+                .chatModel(chatModel)
                 .tools(webTool)
                 .build();
 
