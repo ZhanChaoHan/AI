@@ -1,11 +1,6 @@
 package shared;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import dev.langchain4j.model.embedding.EmbeddingModel;
-import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
-import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
+import static dev.langchain4j.internal.Utils.getOrDefault;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -15,7 +10,14 @@ import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import static dev.langchain4j.internal.Utils.getOrDefault;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
+import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
 
 
@@ -23,7 +25,7 @@ import static dev.langchain4j.internal.Utils.getOrDefault;
  * @author zhanchaohan
  */
 public class Utils {
-
+	InMemoryEmbeddingStore<TextSegment>  inMemoryEmbeddingStore=new InMemoryEmbeddingStore<TextSegment>();//本地内存库
     public static final String OPENAI_API_KEY = getOrDefault(System.getenv("OPENAI_API_KEY"), "demo");
 
     public static PgVectorEmbeddingStore initPvDb(boolean del) {
