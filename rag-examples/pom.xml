@@ -8,13 +8,17 @@
     <artifactId>rag-examples</artifactId>
     <version>1.19.0</version>
 
+	<!--
+		1.0.0-beta3
+		1.19.0-beta29  1.19.0
+	-->
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--<langchart.version>1.0.0-beta3</langchart.version>-->
-        <langchart.version>1.19.0-beta29</langchart.version>
-        <chat.version>1.19.0</chat.version>
+        <langchart.version>1.0.0-beta3</langchart.version>
+        <chat.version>1.0.0-beta3</chat.version>
     </properties>
 
     <dependencies>
@@ -122,7 +126,8 @@
 		-->
 		
 		<!--
-		维度为 1024，语义表达能力更强，但计算资源和内存占用高于 Small 版本。
+		small 维度为 512
+		large 维度为 1024，语义表达能力更强，但计算资源和内存占用高于 Small 版本。
 		‌适用场景‌：服务器资源充足、对检索准确率极致追求的生产环境。
 		
 	<dependency>

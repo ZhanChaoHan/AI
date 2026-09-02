@@ -69,11 +69,11 @@ public class SqlDatabaseContentRetrieverDemo {
 	public void t1() throws ClassNotFoundException {
 		ContentRetriever contentRetriever = SqlDatabaseContentRetriever.builder()
                 .dataSource(createDataSource())
-                .chatModel(chatModel)
+                .chatLanguageModel(chatModel)
                 .build();
 		
 		Assistant  assistant =AiServices.builder(Assistant.class)
-        .chatModel(chatModel)
+        .chatLanguageModel(chatModel)
         .contentRetriever(contentRetriever)
         .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
         .build();

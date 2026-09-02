@@ -42,13 +42,7 @@ public class Demo1 {
         EmbeddingStoreIngestor.ingest(documents, embeddingStore);//文档写入内存库
         
         ContentRetriever contentRetriever=EmbeddingStoreContentRetriever.from(embeddingStore);
-       
         
-        Assistant assistant= AiServices.builder(Assistant.class).chatMemory ( MessageWindowChatMemory.withMaxMessages(10) )
-        .contentRetriever ( contentRetriever )
-        .chatModel(chatModel)
-        .build ();
-        
-        shared.Utils.startConversationWith(assistant);
+        shared.Utils.chartWithAssistant(contentRetriever);
     }
 }

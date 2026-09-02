@@ -103,7 +103,7 @@ public class ChatModelDemo {
         //ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(300, new OpenAiTokenizer(GPT_3_5_TURBO));
 
         ConversationalChain chain = ConversationalChain.builder()
-                                      .chatModel(chatModel)
+                                      .chatLanguageModel(chatModel)
                                       .chatMemory(chatMemory)
                                       .build();
         String answer = chain.execute("What are all the movies directed by Quentin Tarantino?");

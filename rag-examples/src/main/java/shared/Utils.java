@@ -15,9 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.rag.content.retriever.ContentRetriever;
+import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
@@ -27,8 +30,6 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
  * @author zhanchaohan
  */
 public class Utils {
-	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
-	
 	InMemoryEmbeddingStore<TextSegment>  inMemoryEmbeddingStore=new InMemoryEmbeddingStore<TextSegment>();//本地内存库
     public static final String OPENAI_API_KEY = getOrDefault(System.getenv("OPENAI_API_KEY"), "demo");
 
@@ -80,6 +81,16 @@ public class Utils {
         }
     }
 
+    public static void chartWithAssistant(ContentRetriever contentRetriever) {
+    	Assistant assistant= AiServices.builder(Assistant.class).chatMemory ( MessageWindowChatMemory.withMaxMessages(10) )
+    	        .contentRetriever ( contentRetriever )
+    	        .chatLanguageModel(chatLanguageModel())
+    	        .build ();
+    	        
+    	shared.Utils.startConversationWith(assistant);
+    }
+    
+    
     public static PathMatcher glob(String glob) {
         return FileSystems.getDefault().getPathMatcher("glob:" + glob);
     }

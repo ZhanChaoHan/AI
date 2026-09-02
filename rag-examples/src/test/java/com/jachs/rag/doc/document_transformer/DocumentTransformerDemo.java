@@ -31,7 +31,7 @@ public class DocumentTransformerDemo {
 
         // 实例化转换器
         DocumentTransformer transformer = new CustomHtmlCleanerTransformer();
-
+        
         // 执行转换
         Document cleanDoc = transformer.transform(htmlDoc);
 

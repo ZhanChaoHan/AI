@@ -12,16 +12,12 @@ import dev.langchain4j.data.document.parser.TextDocumentParser;
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
-import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
-import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
-import shared.Assistant;
 
 /***
  * @author zhanchaohan
@@ -56,15 +52,6 @@ public class Demo {
                 .minScore(0.5)
                 .build();
         
-        ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);//最大保留信息
-        
-        
-        Assistant assistant=AiServices.builder(Assistant.class)
-        .chatModel(chatModel)
-        .contentRetriever(contentRetriever)
-        .chatMemory(chatMemory)
-        .build();//切片向量数据传递给大模型，建立对话
-        
-        shared.Utils.startConversationWith(assistant);
+        shared.Utils.chartWithAssistant(contentRetriever);
     }
 }

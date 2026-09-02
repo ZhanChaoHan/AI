@@ -26,11 +26,15 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 /***
 Filter 允许在执行向量搜索时按 Metadata 条目进行过滤。
 目前支持以下 Filter 类型/操作：
-IsEqualTo
-IsNotEqualTo
-IsGreaterThan
+IsEqualTo  =
+IsNotEqualTo  !=
+IsGreaterThan  >
 IsGreaterThanOrEqualTo
-IsLessThan
+
+‌时间过滤‌：例如，只检索 timestamp 小于某个特定值（即早于该时间）的文档。
+‌数值范围过滤‌：例如，只检索 price 小于 100 的商品描述，或 version 小于 2.0 的技术文档。
+IsLessThan   <
+
 IsLessThanOrEqualTo
 IsIn
 IsNotIn

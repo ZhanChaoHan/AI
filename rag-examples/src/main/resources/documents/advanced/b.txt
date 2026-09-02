@@ -1,63 +1,6 @@
-# LangChain4j RetrievalAugmentor 集成指南
-
-## 1. 概述
-
-本文档旨在为开发者提供一份清晰、实用的 LangChain4j `RetrievalAugmentor` 组件集成指南。`RetrievalAugmentor` 是 LangChain4j 中构建检索增强生成（RAG）应用的核心抽象，它负责协调查询处理、内容检索、结果重排与上下文注入的全流程。
-
-## 2. 核心依赖
-
-在项目的 `pom.xml` 中引入以下核心依赖（以 Maven 为例）：
-
-`<dependency>`\
-`    <groupId>dev.langchain4j</groupId>`\
-`    <artifactId>langchain4j</artifactId>`\
-`    <version>0.31.0</version> <!-- 请使用最新稳定版 -->`\
-`</dependency>`\
-`<dependency>`\
-`    <groupId>dev.langchain4j</groupId>`\
-`    <artifactId>langchain4j-open-ai</artifactId>`\
-`    <version>0.31.0</version>`\
-`    <!-- 若使用国内模型，替换为 langchain4j-qianfan 或 langchain4j-zhipu-ai 等 -->`\
-`</dependency>`\
-`<dependency>`\
-`    <groupId>dev.langchain4j</groupId>`\
-`    <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>`\
-`    <version>0.31.0</version> <!-- 轻量级本地嵌入模型 -->`\
-`</dependency>`\
-`<dependency>`\
-`    <groupId>dev.langchain4j</groupId>`\
-`    <artifactId>langchain4j-store-embedding-in-memory</artifactId>`\
-`    <version>0.31.0</version> <!-- 内存向量存储，用于示例 -->`\
-`</dependency>`
-
-## 3. 基础集成：使用 DefaultRetrievalAugmentor
-
-这是最简单的集成方式，适用于单一向量库检索场景。
-
-### 3.1 初始化核心组件
-
-`import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;`\
-`import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;`\
-`import dev.langchain4j.model.openai.OpenAiChatModel;`\
-`import dev.langchain4j.rag.DefaultRetrievalAugmentor;`\
-`import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;`\
-`import dev.langchain4j.service.AiServices;`\
-\
-`// 1. 初始化向量存储与嵌入模型`\
-`InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();`\
-`AllMiniLmL6V2EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();`\
-\
-`// 2. 初始化大语言模型（此处以 OpenAI 为例，国内可替换为智谱、通义等）`\
-`OpenAiChatModel chatModel = OpenAiChatModel.builder()`\
-`        .apiKey(System.getenv("OPENAI_API_KEY"))`\
-`        .modelName("gpt-3.5-turbo")`\
-`        .build();`\
-\
-`// 3. 构建内容检索器`\
-`EmbeddingStoreContentRetriever retriever = EmbeddingStoreContentRetriever.builder()`\
-`        .embeddingStore(embeddingStore)`\
-`        .embeddingModel(embeddingModel)`\
-`        .maxResults(3) // 每次检索返回的最大片段数`\
-`        .minScore(0.7) // 相似度最低阈值`\
-`        .build();`\
-\
+技术文档
+技术内容
+本地Embedding模型部署指引
+引入对应BGE模型Maven依赖，自动解压ONNX运行库。
+实例化EmbeddingModel，直接生成1024维中文向量。
+向量维度需与向量数据库索引配置严格对齐，避免检索报错。

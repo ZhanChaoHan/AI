@@ -22,7 +22,8 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 import shared.Assistant;
 
 /***
-在 LangChain4j 中，QueryRouter 是高级 RAG（检索增强生成）架构中的核心组件，主要用于解决“多知识源”场景下的检索分发问题。它的核心职责是根据用户查询的语义或规则，决定将请求路由到哪一个或多个 ContentRetriever（内容检索器），从而避免全量搜索带来的噪音和性能损耗。
+在 LangChain4j 中，QueryRouter 是高级 RAG（检索增强生成）架构中的核心组件，主要用于解决“多知识源”场景下的检索分发问题。
+它的核心职责是根据用户查询的语义或规则，决定将请求路由到哪一个或多个 ContentRetriever（内容检索器），从而避免全量搜索带来的噪音和性能损耗。
 以下是 QueryRouter 的三种典型使用案例，从基础的全量路由到基于 LLM 的智能路由。
 1. 基础案例：DefaultQueryRouter（全量/静态路由）
 这是最简单的路由实现，适用于数据量较小或需要确保召回率的场景。它会将同一个查询发送给所有注册的检索器，最后由 ContentAggregator合并结果。
@@ -91,7 +92,7 @@ public class DemoA1 {
 		 
 		 
 		Assistant assistant=AiServices.builder(Assistant.class)
-			        .chatModel(shared.Utils.chatLanguageModel())
+			        .chatLanguageModel(shared.Utils.chatLanguageModel())
 			        .retrievalAugmentor(augmentor)
 			        .chatMemory(chatMemory)
 			        .build();//切片向量数据传递给大模型，建立对话

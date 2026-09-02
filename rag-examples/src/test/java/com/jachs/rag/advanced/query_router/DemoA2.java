@@ -96,7 +96,7 @@ public class DemoA2 {
 
 		// 3. 创建 LLM 驱动的路由器
 		LanguageModelQueryRouter router = LanguageModelQueryRouter.builder()
-		    .chatModel(chatModel)
+		    .chatLanguageModel(chatModel)
 		    .retrieverToDescription(retrievers)
 		    // .promptTemplate(...) // 可选：自定义提示词模板
 		    .build();
@@ -110,7 +110,7 @@ public class DemoA2 {
 		
 		 
 		Assistant assistant=AiServices.builder(Assistant.class)
-			        .chatModel(shared.Utils.chatLanguageModel())
+			        .chatLanguageModel(shared.Utils.chatLanguageModel())
 			        .retrievalAugmentor(augmentor)
 			        .chatMemory(chatMemory)
 			        .build();//切片向量数据传递给大模型，建立对话

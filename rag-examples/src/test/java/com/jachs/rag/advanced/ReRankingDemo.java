@@ -180,7 +180,7 @@ public class ReRankingDemo {
                  .build();//封装对话大模型对象
          
          Assistant assistant=AiServices.builder(Assistant.class)
-         .chatModel(deepSeekModel)
+         .chatLanguageModel(deepSeekModel)
          .retrievalAugmentor(retrievalAugmentor)
          .chatMemory(chatMemory)
          .build();

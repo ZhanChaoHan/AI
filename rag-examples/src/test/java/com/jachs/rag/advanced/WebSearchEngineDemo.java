@@ -39,13 +39,13 @@ public class WebSearchEngineDemo {
 
         WebSearchTool webTool = WebSearchTool.from(searchEngine);
 
-        Assistant assistant = AiServices.builder(Assistant.class)
-                .chatModel(chatModel)
-                .tools(webTool)
-                .build();
-
-        String answer = assistant.answer("我的家人下周要来马德里看我，列出适合全家人的最佳旅游活动");
-        System.out.println(answer);
+//        Assistant assistant = AiServices.builder(Assistant.class)
+//                .chatModel(chatModel)
+//                .tools(webTool)
+//                .build();
+//
+//        String answer = assistant.answer("我的家人下周要来马德里看我，列出适合全家人的最佳旅游活动");
+//        System.out.println(answer);
         /*
             以下是马德里适合全家人的一些最佳旅游活动：
             

@@ -47,7 +47,7 @@ public class QueryTransformerDemo {
                 .build();
         
         Assistant assistant=AiServices.builder(Assistant.class)
-        .chatModel(chatModel)
+        .chatLanguageModel(chatModel)
         .retrievalAugmentor(retrievalAugmentor)
         .chatMemory(chatMemory)
         .build();

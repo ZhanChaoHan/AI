@@ -17,7 +17,6 @@ import dev.langchain4j.data.document.parser.TextDocumentParser;
 import dev.langchain4j.experimental.rag.content.retriever.sql.SqlDatabaseContentRetriever;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
-import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.rag.content.aggregator.ContentAggregator;
 import dev.langchain4j.rag.content.aggregator.DefaultContentAggregator;
@@ -36,7 +35,6 @@ ContentAggregator 负责聚合来自以下来源的多个 Content 排名列表�
  */
 public class ContentAggregatorDemo {
 	EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
-	OpenAiChatModel chatModel =shared.Utils.chatLanguageModel();
 	
 	@Test
 	public void t1() {
@@ -106,7 +104,6 @@ public class ContentAggregatorDemo {
         
         ContentRetriever contentRetriever = SqlDatabaseContentRetriever.builder()
                 .dataSource(dataSource)
-                .chatModel(chatModel)
                 .build();
 		
 		List<Content> cList=contentRetriever.retrieve ( Query.from ( "苹果") );

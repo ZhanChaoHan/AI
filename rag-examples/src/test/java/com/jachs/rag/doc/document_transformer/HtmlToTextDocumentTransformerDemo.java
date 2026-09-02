@@ -3,6 +3,7 @@ package com.jachs.rag.doc.document_transformer;
 import org.junit.jupiter.api.Test;
 
 import dev.langchain4j.data.document.Document;
+import dev.langchain4j.data.document.DocumentTransformer;
 import dev.langchain4j.data.document.transformer.jsoup.HtmlToTextDocumentTransformer;
 
 /**
@@ -23,7 +24,7 @@ public class HtmlToTextDocumentTransformerDemo {
 
         // 2. 初始化转换器
         // 默认配置：提取文本，忽略脚本和样式
-        HtmlToTextDocumentTransformer transformer = new HtmlToTextDocumentTransformer();
+        DocumentTransformer transformer = new HtmlToTextDocumentTransformer();
 
         // 3. 执行转换
         Document textDoc = transformer.transform(htmlDoc);
