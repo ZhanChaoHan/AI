@@ -81,6 +81,14 @@ public class Utils {
         }
     }
 
+    public static Assistant assistant(ContentRetriever contentRetriever) {
+    	return AiServices.builder(Assistant.class).chatMemory ( MessageWindowChatMemory.withMaxMessages(10) )
+    	        .contentRetriever ( contentRetriever )
+    	        .chatLanguageModel(chatLanguageModel())
+    	        .build ();
+    	        
+    }
+    
     public static void chartWithAssistant(ContentRetriever contentRetriever) {
     	Assistant assistant= AiServices.builder(Assistant.class).chatMemory ( MessageWindowChatMemory.withMaxMessages(10) )
     	        .contentRetriever ( contentRetriever )
