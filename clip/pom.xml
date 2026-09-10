@@ -15,12 +15,23 @@
   </properties>
 
   <dependencies>
-	
+
 	<dependency>
 	    <groupId>io.github.inference4j</groupId>
 	    <artifactId>inference4j-core</artifactId>
-	    <version>0.10.0</version>
+	    <version>0.12.0</version>
 	</dependency>
+	<dependency>
+	    <groupId>io.github.inference4j</groupId>
+	    <artifactId>inference4j-genai</artifactId>
+	    <version>0.12.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>io.github.inference4j</groupId>
+	    <artifactId>inference4j-runtime</artifactId>
+	    <version>0.12.0</version>
+	</dependency>
+	
 
 	<dependency>
 	    <groupId>com.microsoft.onnxruntime</groupId>
@@ -41,4 +52,19 @@
       <version>4.13.1</version>
     </dependency>
   </dependencies>
+  
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version> 
+            <configuration>
+                <release>17</release> 
+                <encoding>UTF-8</encoding>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
 </project>

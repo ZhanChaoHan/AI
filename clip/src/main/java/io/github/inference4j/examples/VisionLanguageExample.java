@@ -1,0 +1,74 @@
+/*
+ * Copyright 2026 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.github.inference4j.examples;
+
+import io.github.inference4j.generation.GenerationResult;
+import io.github.inference4j.genai.ModelSources;
+import io.github.inference4j.genai.vision.VisionInput;
+import io.github.inference4j.genai.vision.VisionLanguageModel;
+
+import java.nio.file.Path;
+
+/**
+ * Demonstrates image description and visual Q&A with Phi-3.5 Vision.
+ *
+ * <p>Uses the sample image bundled in {@code src/main/resources/fixtures/sample.jpg}.
+ *
+ * <p>Usage:
+ * <pre>
+ * ./gradlew :inference4j-examples:run \
+ *     -PmainClass=io.github.inference4j.examples.VisionLanguageExample
+ * </pre>
+ */
+public class VisionLanguageExample {
+
+    public static void main(String[] args) throws Exception {
+        Path imagePath = Path.of(VisionLanguageExample.class.getResource("/fixtures/sample.jpg").toURI());
+
+        System.out.println("=== Vision Language Model — Phi-3.5 Vision ===");
+        System.out.printf("Image: %s%n%n", imagePath);
+        var start = 0L;
+        try (var vision = VisionLanguageModel.builder()
+                .model(ModelSources.phi3Vision())
+                .maxLength(4096)
+                .build()) {
+            start = System.currentTimeMillis();
+            System.out.println("Phi-3.5 Vision loaded successfully.\n");
+
+            // Describe the image
+            System.out.print("Description: ");
+            GenerationResult description = vision.generate(
+                    new VisionInput(imagePath, "Describe this image."),
+                    token -> System.out.print(token));
+            System.out.printf("%n→ %d tokens in %,d ms (%.1f tok/s)%n%n",
+                    description.generatedTokens(), description.duration().toMillis(),
+                    description.generatedTokens() * 1000.0 / description.duration().toMillis());
+
+            // Ask a question about the image
+//            String question = "What colors are prominent in this image?";
+//            System.out.printf("Q: %s%nA: ", question);
+//            GenerationResult answer = vision.generate(
+//                    new VisionInput(imagePath, question),
+//                    token -> System.out.print(token));
+//            System.out.printf("%n→ %d tokens in %,d ms (%.1f tok/s)%n",
+//                    answer.generatedTokens(), answer.duration().toMillis(),
+//                    answer.generatedTokens() * 1000.0 / answer.duration().toMillis());
+        }
+        var end = System.currentTimeMillis();
+        System.out.println("Inference time: " + (end - start) + "ms");
+
+    }
+}
