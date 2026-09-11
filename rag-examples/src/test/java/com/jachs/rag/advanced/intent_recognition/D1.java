@@ -2,10 +2,10 @@ package com.jachs.rag.advanced.intent_recognition;
 
 import org.junit.jupiter.api.Test;
 
-import com.jachs.rag.advanced.intent_recognition.service.AfterSaleService;
 import com.jachs.rag.advanced.intent_recognition.service.IntentRecognitionService;
-import com.jachs.rag.advanced.intent_recognition.service.OrderService;
-import com.jachs.rag.advanced.intent_recognition.service.RagQueryService;
+import com.jachs.rag.advanced.intent_recognition.service.bussion.AfterSaleService;
+import com.jachs.rag.advanced.intent_recognition.service.bussion.OrderService;
+import com.jachs.rag.advanced.intent_recognition.service.bussion.RagQueryService;
 
 import dev.langchain4j.model.openai.OpenAiChatModel;
 

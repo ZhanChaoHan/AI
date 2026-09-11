@@ -1,8 +1,6 @@
 package com.jachs.rag.advanced.intent_recognition.service;
 
 
-import com.jachs.rag.advanced.intent_recognition.IntentResult;
-
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 

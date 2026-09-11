@@ -1,7 +1,9 @@
 package com.jachs.rag.advanced.intent_recognition.service;
 
 
-import com.jachs.rag.advanced.intent_recognition.IntentResult;
+import com.jachs.rag.advanced.intent_recognition.service.bussion.AfterSaleService;
+import com.jachs.rag.advanced.intent_recognition.service.bussion.OrderService;
+import com.jachs.rag.advanced.intent_recognition.service.bussion.RagQueryService;
 
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
