@@ -48,6 +48,21 @@ public class Utils {
                  .build();
     }
     
+    public static PgVectorEmbeddingStore initPvDb2(boolean del,int dimension,String table) {
+    	EmbeddingModel model = new BgeSmallEnV15QuantizedEmbeddingModel();
+    	
+    	 return PgVectorEmbeddingStore.builder()
+                 .host("localhost")
+                 .port(5432)
+                 .database("langchat")
+                 .user("postgres")
+                 .password("12345678")
+                 .table(table)
+                 .dropTableFirst(del)
+                 .dimension(dimension)
+                 .build();
+    }
+    
     public static OpenAiChatModel chatLanguageModel() {
     	String apiKey = System.getenv("deepseek-key");
     	return  OpenAiChatModel.builder()

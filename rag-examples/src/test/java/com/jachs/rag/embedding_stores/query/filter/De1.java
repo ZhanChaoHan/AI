@@ -70,9 +70,9 @@ public class De1 {
 	
 	@Test
 	public void t1() {
-		 	String QUERY="""
-		 			一
-		 			""";
+		String QUERY="""
+	 			一
+	 			""";
 	        Embedding queryEmbedding = model.embed(QUERY).content();
 	        
 //	        Filter filter=new ContainsString ( "file_name", "c.txt" );//包含子串

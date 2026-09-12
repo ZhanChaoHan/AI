@@ -1,4 +1,4 @@
-package com.jachs.clip.mode.qianwen;
+package com.jachs.dashscope_sdk_java_demo.embedding.add;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class MultimodalEmbedding2 {
 	            .build();
 		
 
-		File file = new File("D:\\猫狗.jpg");
+		File file = new File("E:\\image\\D.jpg");
 		String mimeType = FileUtil.getMimeType(file.toPath());
 		
 		JSONObject payload = new JSONObject();

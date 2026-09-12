@@ -1,4 +1,4 @@
-package com.jachs.clip;
+package com.jachs.dashscope_sdk_java_demo;
 
 /**
  * Hello world!

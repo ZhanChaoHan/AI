@@ -16,4 +16,9 @@ public class D2 {
 		MetadataFilterBuilder.metadataKey("").isEqualTo("")
 		.and(MetadataFilterBuilder.metadataKey("").isEqualTo(""));
 	}
+	
+	
+	public void t1() {
+		
+	}
 }
