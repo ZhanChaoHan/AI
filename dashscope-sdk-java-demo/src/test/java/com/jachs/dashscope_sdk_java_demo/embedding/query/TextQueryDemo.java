@@ -7,7 +7,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.alibaba.dashscope.embeddings.MultiModalEmbedding;
-import com.alibaba.dashscope.embeddings.MultiModalEmbeddingItemImage;
+import com.alibaba.dashscope.embeddings.MultiModalEmbeddingItemText;
 import com.alibaba.dashscope.embeddings.MultiModalEmbeddingParam;
 import com.alibaba.dashscope.embeddings.MultiModalEmbeddingResult;
 import com.jachs.dashscope_sdk_java_demo.util.Utils;
@@ -16,34 +16,31 @@ import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
-import dev.langchain4j.store.embedding.filter.MetadataFilterBuilder;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
 /***
  * @author zhanchaohan
  */
-public class QueryMultiImageDemo {
-	//qwen3-vl-embedding：2048  独立 / 融合
-	//tongyi-embedding-vision-plus  1152  仅独立
+public class TextQueryDemo {
 	String apiKey = "Bearer " + System.getenv("bainian_02");
 	boolean delBase = false;// 是否删库
-	String fileName = "C.jpeg";
-	String tableName="qianwen_image";
+
+	String tableName = "qianwen_text";
 	String modelName = "tongyi-embedding-vision-plus";
 	int dimension = 1152;
 
+	MultiModalEmbedding embedding = new MultiModalEmbedding();
+
 	@Test
 	public void t1() throws Exception {
-		MultiModalEmbedding embedding = new MultiModalEmbedding();
-		MultiModalEmbeddingItemImage image = new MultiModalEmbeddingItemImage("D:\\image\\" + fileName);
+		String file="青海长云暗雪山，孤城遥望玉门关。";
+		
+		MultiModalEmbeddingItemText text = MultiModalEmbeddingItemText.builder().text(file).build();
 
-		MultiModalEmbeddingParam param = MultiModalEmbeddingParam
-				.builder().apiKey(apiKey)
-				.model(modelName).contents(Arrays.asList(image))
-				.parameters(Map.of(
-						"dimension",dimension
-						))
-				.build();
+		MultiModalEmbeddingParam param = MultiModalEmbeddingParam.builder()
+				.apiKey(apiKey).model(modelName)
+				.contents(Arrays.asList(text))
+				.parameters(Map.of("dimension", dimension)).build();
 		MultiModalEmbeddingResult result = embedding.call(param);
 
 		System.out.print(result);
@@ -58,7 +55,6 @@ public class QueryMultiImageDemo {
 		        .queryEmbedding(queryEmbedding)
 		        .maxResults(10)
 		        .minScore(0.5)
-//		        .filter(MetadataFilterBuilder.metadataKey("name").isEqualTo("A.jpg"))
 		        .build();
 
 		List<EmbeddingMatch<TextSegment>> matches = store.search(request).matches();
@@ -66,5 +62,4 @@ public class QueryMultiImageDemo {
 		Utils.printEmbeddingMatch(matches);
 
 	}
-
 }

@@ -27,50 +27,54 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
  */
 public class MultiImageDemo {
 	String apiKey = "Bearer " + System.getenv("bainian_02");
-	String modelName = "qwen3-vl-embedding";
 	boolean delBase = false;// 是否删库
-	String fileName = "C.jpeg";
+	List<String>fileList=Arrays.asList("A.jpg","AA.png","B.jpeg","BB.png","C.jpeg"
+			,"CC.png","D.jpg","DD.png","EE.png");
+	
 	String imgPath="D:\\image\\";
 	String tableName="qianwen_image";
-	int dimension = 2048;
+	String modelName = "tongyi-embedding-vision-plus";
+	int dimension = 1152;
 
 	
 	MultiModalEmbedding embedding = new MultiModalEmbedding();
 	
 	@Test
 	public void t1() throws Exception {
-		MultiModalEmbeddingItemImage image = new MultiModalEmbeddingItemImage(imgPath + fileName);
-
-		MultiModalEmbeddingParam param = MultiModalEmbeddingParam
-				.builder().apiKey(apiKey)
-				.model(modelName).contents(Arrays.asList(image))
-				.parameters(Map.of(
-						"dimension",dimension,
-						"instruct","向量化图片"
-						))
-				.build();
-		MultiModalEmbeddingResult result = embedding.call(param);
-
-		System.out.print(result);
-
-		PgVectorEmbeddingStore store = Utils.initPvDb2(delBase, dimension, tableName);
-
-		List<Double> vector = result.getOutput().getEmbeddings().get(0).getEmbedding();
-
-		Embedding emb = Embedding.from(Utils.DoubleToFloat(vector));
-		Metadata metadata = new Metadata();
-		metadata.put("name", fileName);
-
-		TextSegment textSegment = TextSegment.from(fileName, metadata);
-
-		store.add(emb, textSegment);
-
+		for (String file : fileList) {
+			MultiModalEmbeddingItemImage image = new MultiModalEmbeddingItemImage(imgPath + file);
+	
+			MultiModalEmbeddingParam param = MultiModalEmbeddingParam
+					.builder().apiKey(apiKey)
+					.model(modelName).contents(Arrays.asList(image))
+					.parameters(Map.of(
+							"dimension",dimension,
+							"instruct","向量化图片"
+							))
+					.build();
+			MultiModalEmbeddingResult result = embedding.call(param);
+	
+			System.out.print(result);
+	
+			PgVectorEmbeddingStore store = Utils.initPvDb2(delBase, dimension, tableName);
+	
+			List<Double> vector = result.getOutput().getEmbeddings().get(0).getEmbedding();
+	
+			Embedding emb = Embedding.from(Utils.DoubleToFloat(vector));
+			Metadata metadata = new Metadata();
+			metadata.put("name", file);
+	
+			TextSegment textSegment = TextSegment.from(file, metadata);
+	
+			store.add(emb, textSegment);
+		}
 	}
 
 	
 	@Test
 	public void t2() throws Exception {
-		byte[] fileBytes = Files.readAllBytes(Paths.get("D:\\image\\B.jpeg"));
+		String img="B.jpeg\"";
+		byte[] fileBytes = Files.readAllBytes(Paths.get("D:\\image\\"+img));
 		String base64Img = Base64.encodeBase64String(fileBytes);
 		String fullBase64Url = "data:image/jpeg;base64," + base64Img;
 		
@@ -95,9 +99,9 @@ public class MultiImageDemo {
 
 		Embedding emb = Embedding.from(Utils.DoubleToFloat(vector));
 		Metadata metadata = new Metadata();
-		metadata.put("name", fileName);
+		metadata.put("name", img);
 
-		TextSegment textSegment = TextSegment.from(fileName, metadata);
+		TextSegment textSegment = TextSegment.from(img, metadata);
 
 		store.add(emb, textSegment);
 
