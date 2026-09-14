@@ -30,9 +30,11 @@ public class Utils {
 	
 	public static void printEmbeddingMatch(List<EmbeddingMatch<TextSegment>> matches) {
 		for ( EmbeddingMatch<TextSegment> embeddingMatch : matches ) {
+			
             System.out.println ( "-----------**************-----------" );
             System.out.println ( embeddingMatch.score () );
-            System.out.println ( embeddingMatch.toString () );
+            System.out.println (embeddingMatch.embedded().metadata() );
+            System.out.println (embeddingMatch.embedded().text() );
             System.out.println ( "-----------**************-----------" );
             System.out.println ( "\n" );
         }

@@ -1,7 +1,10 @@
 package com.jachs.dashscope_sdk_java_demo.embedding.query;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 
 import com.alibaba.dashscope.embeddings.MultiModalEmbedding;
@@ -9,9 +12,6 @@ import com.alibaba.dashscope.embeddings.MultiModalEmbeddingItemImage;
 import com.alibaba.dashscope.embeddings.MultiModalEmbeddingItemText;
 import com.alibaba.dashscope.embeddings.MultiModalEmbeddingParam;
 import com.alibaba.dashscope.embeddings.MultiModalEmbeddingResult;
-import com.alibaba.dashscope.exception.ApiException;
-import com.alibaba.dashscope.exception.NoApiKeyException;
-import com.alibaba.dashscope.exception.UploadFileException;
 import com.jachs.dashscope_sdk_java_demo.util.Utils;
 
 import dev.langchain4j.data.embedding.Embedding;
@@ -32,6 +32,7 @@ public class QueryMultiModalEmbeddingDemo1 {
 	
 	PgVectorEmbeddingStore store=com.jachs.dashscope_sdk_java_demo.util.Utils.initPvDb2(delBase, dimension, tableName);
 	
+	//文字查图
 	@Test
 	public void t1() throws Exception {
 		MultiModalEmbedding embedding = new MultiModalEmbedding();
@@ -40,7 +41,7 @@ public class QueryMultiModalEmbeddingDemo1 {
 		    .model(modelName)
 		    .apiKey(apiKey)
 		    .contents(List.of(
-		        MultiModalEmbeddingItemText.builder().text("河畔和红颜色的花").build()
+		        MultiModalEmbeddingItemText.builder().text("伯劳").build()
 		    ))
 		    .build();
 
@@ -60,15 +61,21 @@ public class QueryMultiModalEmbeddingDemo1 {
 		Utils.printEmbeddingMatch(matches);
 	}
 	
+	
+	//图查图
 	@Test
 	public void t2() throws Exception {
+//		byte[] fileBytes = Files.readAllBytes(Paths.get("D:\\image\\B.jpeg"));
+//		String base64Img = Base64.encodeBase64String(fileBytes);
+//		String fullBase64Url = "data:image/jpeg;base64," + base64Img;
+		
 		MultiModalEmbedding embedding = new MultiModalEmbedding();
 		
 		MultiModalEmbeddingParam textParam = MultiModalEmbeddingParam.builder()
 		    .model(modelName)
 		    .apiKey(apiKey)
 		    .contents(List.of(
-		        MultiModalEmbeddingItemImage.builder().image("E:\\image\\" + "A.jpg").build()
+		        MultiModalEmbeddingItemImage.builder().image("D:\\image\\" + "A.jpg").build()
 		    ))
 		    .build();
 		MultiModalEmbeddingResult textResult = embedding.call(textParam);
@@ -87,6 +94,7 @@ public class QueryMultiModalEmbeddingDemo1 {
 	}
 	
 	
+	//文图查图
 	@Test
 	public void t3() throws Exception {
 		MultiModalEmbedding embedding = new MultiModalEmbedding();
@@ -95,8 +103,8 @@ public class QueryMultiModalEmbeddingDemo1 {
 		    .model(modelName)
 		    .apiKey(apiKey)
 		    .contents(List.of(
-		        MultiModalEmbeddingItemText.builder().text("一只小鸟").build(),
-		        MultiModalEmbeddingItemImage.builder().image("E:\\image\\" + "A.jpg").build()
+		        MultiModalEmbeddingItemText.builder().text("棕背伯劳栖于绿叶枝头，黑头白喉橙腹，姿态优雅。").build(),
+		        MultiModalEmbeddingItemImage.builder().image("D:\\image\\" + "A.jpg").build()
 		    ))
 		    .build();
 		MultiModalEmbeddingResult textResult = embedding.call(textParam);

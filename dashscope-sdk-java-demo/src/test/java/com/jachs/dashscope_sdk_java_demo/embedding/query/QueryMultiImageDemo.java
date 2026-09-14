@@ -26,12 +26,13 @@ public class QueryMultiImageDemo {
 	String modelName = "qwen3-vl-embedding";
 	boolean delBase = false;// 是否删库
 	String fileName = "C.jpeg";
+	String tableName="qianwen_image";
 	int dimension = 2048;
 
 	@Test
 	public void t1() throws Exception {
 		MultiModalEmbedding embedding = new MultiModalEmbedding();
-		MultiModalEmbeddingItemImage image = new MultiModalEmbeddingItemImage("E:\\image\\" + fileName);
+		MultiModalEmbeddingItemImage image = new MultiModalEmbeddingItemImage("D:\\image\\" + fileName);
 
 		MultiModalEmbeddingParam param = MultiModalEmbeddingParam
 				.builder().apiKey(apiKey)
@@ -44,7 +45,7 @@ public class QueryMultiImageDemo {
 
 		System.out.print(result);
 
-		PgVectorEmbeddingStore store = Utils.initPvDb2(delBase, dimension, "qianwen_image");
+		PgVectorEmbeddingStore store = Utils.initPvDb2(delBase, dimension, tableName);
 
 		List<Double> vector = result.getOutput().getEmbeddings().get(0).getEmbedding();
 
@@ -52,20 +53,13 @@ public class QueryMultiImageDemo {
 		
 		EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
 		        .queryEmbedding(queryEmbedding)
-		        .maxResults(10)      // 返回最相似的 10 条
-		        .minScore(0.5)       // 可选：设置最低相似度阈值，过滤不相关结果[citation:4]
+		        .maxResults(10)
+		        .minScore(0.5)
 		        .build();
 
-		// 2. 执行搜索
 		List<EmbeddingMatch<TextSegment>> matches = store.search(request).matches();
 		
-		 for ( EmbeddingMatch<TextSegment> embeddingMatch : matches ) {
-	            System.out.println ( "-----------**************-----------" );
-	            System.out.println ( embeddingMatch.score () );
-	            System.out.println ( embeddingMatch.toString () );
-	            System.out.println ( "-----------**************-----------" );
-	            System.out.println ( "\n" );
-	        }
+		Utils.printEmbeddingMatch(matches);
 
 	}
 
