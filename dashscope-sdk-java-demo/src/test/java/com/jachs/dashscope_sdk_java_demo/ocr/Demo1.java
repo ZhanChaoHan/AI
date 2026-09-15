@@ -28,9 +28,6 @@ import io.reactivex.Flowable;
  * @author zhanchaohan
  */
 public class Demo1 {
-	// 以下为北京地域 base_url，若使用弗吉尼亚地域模型，需要将base_url换成 https://{WorkspaceId}.us-east-1.maas.aliyuncs.com/api/v1
-    // 以下为华北2（北京）地域的URL，各地域的URL不同。
-//    static {Constants.baseHttpApiUrl="https://{WorkspaceId}.cn-beijing.maas.aliyuncs.com/api/v1";}
 	String apiKey = "Bearer " + System.getenv("bainian_02");
 	String modelName = "qwen3.5-plus";
 	
@@ -85,7 +82,7 @@ public class Demo1 {
     
 	@Test
 	public void t2() throws Exception {
-		byte[] fileBytes = Files.readAllBytes(Paths.get("D:\\image\\EE.png"));
+		byte[] fileBytes = Files.readAllBytes(Paths.get("D:\\A.png"));
 		String base64Img = Base64.encodeBase64String(fileBytes);
 		String fullBase64Url = "data:image/jpeg;base64," + base64Img;
 		

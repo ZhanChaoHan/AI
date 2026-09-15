@@ -16,21 +16,18 @@ import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
-import dev.langchain4j.store.embedding.filter.MetadataFilterBuilder;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
 /***
  * @author zhanchaohan
  */
-public class QueryMultiImageDemo {
-	//qwen3-vl-embedding：2048  独立 / 融合
-	//tongyi-embedding-vision-plus  1152  仅独立
+public class QueryImageDemo {
 	String apiKey = "Bearer " + System.getenv("bainian_02");
 	boolean delBase = false;// 是否删库
-	String fileName = "C.jpeg";
+	String fileName = "A.jpg";
 	String tableName="qianwen_image";
-	String modelName = "tongyi-embedding-vision-plus";
-	int dimension = 1152;
+	String modelName = "multimodal-embedding-v1";
+	int dimension = 1024;
 
 	@Test
 	public void t1() throws Exception {

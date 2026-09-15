@@ -20,9 +20,7 @@ import com.alibaba.dashscope.common.Role;
 public class Demo {
 	String apiKey = "Bearer " + System.getenv("bainian_02");
 	String modelName = "qwen3.5-ocr";
-	int dimension = 2048;
-	
-	String filePath = "D:\\image\\AA.png";
+	String filePath = "D:\\B.png";
 	
 	@Test
 	public void simpleMultiModalConversationCall() throws Exception{

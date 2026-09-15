@@ -17,8 +17,6 @@ import com.jachs.dashscope_sdk_java_demo.util.Utils;
 
 import dev.langchain4j.data.document.Metadata;
 import dev.langchain4j.data.embedding.Embedding;
-import dev.langchain4j.data.image.Image;
-import dev.langchain4j.data.message.ImageContent;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 
@@ -28,13 +26,14 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 public class MultiImageDemo {
 	String apiKey = "Bearer " + System.getenv("bainian_02");
 	boolean delBase = false;// 是否删库
-	List<String>fileList=Arrays.asList("A.jpg","AA.png","B.jpeg","BB.png","C.jpeg"
+	List<String>fileList=Arrays.asList(
+			"A.jpg","AA.png","B.jpeg","BB.png","C.jpeg"
 			,"CC.png","D.jpg","DD.png","EE.png");
 	
 	String imgPath="D:\\image\\";
 	String tableName="qianwen_image";
-	String modelName = "tongyi-embedding-vision-plus";
-	int dimension = 1152;
+	String modelName = "multimodal-embedding-v1";
+	int dimension = 1024;
 
 	
 	MultiModalEmbedding embedding = new MultiModalEmbedding();

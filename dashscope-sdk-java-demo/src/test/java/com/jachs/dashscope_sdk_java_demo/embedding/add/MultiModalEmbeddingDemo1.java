@@ -23,10 +23,10 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
  */
 public class MultiModalEmbeddingDemo1 {
 	String apiKey = "Bearer " + System.getenv("bainian_02");
-	String modelName = "qwen3-vl-embedding";
+	String modelName = "qwen2.5-vl-embedding";
 	String tableName="qianwen_a";
 	boolean delBase = false;// 是否删库
-	int dimension = 2560;
+	int dimension = 1024;
 
 	
 	Map<String,String>maps=Map.of(

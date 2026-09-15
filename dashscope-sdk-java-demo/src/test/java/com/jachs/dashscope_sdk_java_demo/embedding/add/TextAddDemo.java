@@ -25,8 +25,8 @@ public class TextAddDemo {
 	boolean delBase = false;// 是否删库
 	
 	String tableName="qianwen_text";
-	String modelName = "tongyi-embedding-vision-plus";
-	int dimension = 1152;
+	String modelName = "multimodal-embedding-v1";
+	int dimension = 1024;
 	
 	
 	List<String>fileList=Arrays.asList(

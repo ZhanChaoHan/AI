@@ -1,10 +1,7 @@
 package com.jachs.dashscope_sdk_java_demo.embedding.query;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 
 import com.alibaba.dashscope.embeddings.MultiModalEmbedding;
@@ -26,9 +23,9 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 public class QueryMultiModalEmbeddingDemo1 {
 	String apiKey = "Bearer " + System.getenv("bainian_02");
 	String tableName="qianwen_a";
-	String modelName = "qwen3-vl-embedding";
+	String modelName = "qwen2.5-vl-embedding";
 	boolean delBase=false;//是否删库
-	int dimension =2560;
+	int dimension =1024;
 	
 	PgVectorEmbeddingStore store=com.jachs.dashscope_sdk_java_demo.util.Utils.initPvDb2(delBase, dimension, tableName);
 	
@@ -41,7 +38,7 @@ public class QueryMultiModalEmbeddingDemo1 {
 		    .model(modelName)
 		    .apiKey(apiKey)
 		    .contents(List.of(
-		        MultiModalEmbeddingItemText.builder().text("伯劳").build()
+		        MultiModalEmbeddingItemText.builder().text("棕背伯劳栖于绿叶枝头，黑头白喉橙腹，姿态优雅。").build()
 		    ))
 		    .build();
 
